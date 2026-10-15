@@ -38,7 +38,22 @@ function refreshShots(){
 function showShot(){
  const s=getShot();if(!s)return;
  $("source").textContent="BLOCO "+s.block+" · "+s.chapter+" · "+s.duration+"s estimados\n"+s.era+"\n"+s.objective;
- renderFrames();
+ refreshHubLink();renderFrames();
+}
+function refreshHubLink(){
+ const selected=getShot()?.id||"";
+ const isFilm=/^E5-\d{2}-\d{2}$/.test(selected);
+ const shot=(state.imported&&isFilm)?selected:"E5-03-01";
+ const address=new URL("http://127.0.0.1:8788/");
+ address.searchParams.set("shot",shot);
+ address.searchParams.set("provider","chatgpt_img");
+ address.searchParams.set("kind","imagem");
+ address.searchParams.set("prepare","1");
+ $("connectHub").href=address.href;
+ $("connectHub").textContent="Conectar ao Hub · "+shot+" ↗";
+ $("hubBridgeHint").textContent=state.imported&&isFilm
+   ?"Abrirá esta tomada no GSA Hub instalado, com o roteiro oficial, sem enviar seus arquivos ao GitHub."
+   :"Abre a próxima tomada real E5-03-01 no GSA-NB-01. Requer o Hub local em execução; não funciona remotamente.";
 }
 function suggest(){
  const choice=SUGGEST[$("kind").value]||"chatgpt";

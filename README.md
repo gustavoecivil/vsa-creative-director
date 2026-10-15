@@ -37,3 +37,9 @@ Abra `index.html` em um navegador moderno ou sirva esta pasta com um servidor es
 O conceito inspira o projeto audiovisual *O Engenheiro 5.0*: primeiro definir o problema; depois escolher e combinar ferramentas para resolvê-lo.
 
 © 2026 VSA Creative Director. Código disponibilizado para visualização neste repositório; nenhuma licença de reutilização é concedida automaticamente.
+
+## Conexão com GSA AI Hub local (15/10/2026)
+
+O botão **Conectar ao Hub** abre `http://127.0.0.1:8788/` no **mesmo computador** em que o Creative Director local está rodando. É um encaminhamento local por link, não uma API de sincronização em nuvem. O link identifica a tomada desejada e solicita preparar o prompt de imagem do ChatGPT com base no roteiro oficial privado que já existe na máquina. Nenhum arquivo do filme é publicado neste repositório. O site público não pode ler os vídeos, as fotos, os arquivos ou o banco de dados do computador. Em outro aparelho o endereço `127.0.0.1` não dá acesso à máquina remota.
+
+No fluxo local, o usuário revisa a ficha oficial, envia manualmente o pedido de imagem pelo ChatGPT no navegador, anexa as referências, importa o quadro e decide se o aprova. Só depois há a opção de **preparar** um prompt oficial de animação para Veo 3.1/Kairogen. Geração e gasto de créditos continuam bloqueados nesta integração.
