@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b131e">
+<meta name="description" content="VSA Creative Director: oficina visual para planejar imagens, cenas e vídeos com múltiplos geradores de IA, sem execução automática.">
+<title>VSA Creative Director | Fábrica de Vídeos</title>
+<link rel="stylesheet" href="./styles.css">
+<script src="./app.js" defer></script>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">V<span>SA</span></div><small>CREATIVE DIRECTOR</small></div>
+  <div class="kicker">ESTÚDIO MULTIMODELO / V1</div>
+  <h1>O problema<br>vem <em>primeiro.</em></h1>
+  <p class="description">Uma ideia, diferentes motores criativos. Monte uma produção por cena, preserve a continuidade e escolha a ferramenta certa em cada etapa.</p>
+  <div class="side-title">SEGURANÇA</div>
+  <div class="safe"><strong><span class="led"></span> SEM GERAÇÃO AUTOMÁTICA</strong><p>Planejamento, prompts e revisão são locais ao navegador. Nenhuma API paga é chamada por este site.</p></div>
+  <div class="side-title">SEU PROJETO</div>
+  <div id="projectInfo" class="side-metadata">Modo demonstração · dados fictícios</div>
+  <label class="import-label" for="projectFile">Importar meu plano JSON</label>
+  <input type="file" accept=".json,application/json" id="projectFile" hidden>
+  <button id="resetProject" class="textbutton" type="button">Voltar à demonstração</button>
+  <div class="side-title">FONTES</div>
+  <nav class="links"><a href="https://github.com/comfyanonymous/ComfyUI" target="_blank" rel="noopener">ComfyUI — open source ↗</a><a href="https://docs.dev.runwayml.com/" target="_blank" rel="noopener">Runway — documentação ↗</a><a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT — imagens ↗</a></nav>
+  <div class="foot-side">O site público não contém o roteiro, as fotos ou os arquivos privados de nenhum filme.</div>
+</aside>
+<main>
+  <header class="topbar">
+    <div><span class="kicker">DIREÇÃO CRIATIVA INTELIGENTE</span><div class="top-title">Oficina de cenas <em>sob medida.</em></div></div>
+    <span class="status"><span class="led"></span> PORTFÓLIO LOCAL · SEM CRÉDITOS</span>
+  </header>
+  <div class="workspace">
+    <section class="hero"><div><span class="kicker hero-kicker">VSA · CREATIVE FACTORY</span><h2>Da necessidade ao software.</h2><p>Planeje o quadro, determine o objetivo visual e monte o fluxo: imagem-base, aprovação e animação. Sem depender de um software único.</p></div><div class="counter"><b id="shotCount">06</b><span>TOMADAS NO PROJETO</span></div></section>
+    <div class="columns">
+      <section class="panel">
+        <div class="panel-heading"><span>01</span><h3>Direção da cena</h3></div>
+        <label for="shot">Tomada</label><select id="shot"></select>
+        <div id="source" class="source">Selecione uma tomada.</div>
+        <label for="kind">O que precisamos criar?</label>
+        <select id="kind"><option value="imagem">Quadro-base / imagem estática</option><option value="rosto">Personagem / rosto consistente</option><option value="ambiente">Ambiente / passagem histórica</option><option value="grafico">Gráfico / motion local</option><option value="cinematica">Vídeo cinematográfico</option></select>
+        <label for="provider">Motor criativo</label><select id="provider"></select>
+        <p class="hint" id="hint">A sugestão pode ser alterada.</p>
+        <label for="intent">Ação principal</label><input id="intent" maxlength="220" placeholder="Ex.: câmera acompanha a mão desenhando">
+        <label for="notes">Observações de continuidade</label><textarea id="notes" maxlength="700" rows="3" placeholder="Identidade, figurino, iluminação, objeto, época..."></textarea>
+        <div class="actions"><button class="primary" type="button" id="prepare">Preparar ficha ↗</button><button class="secondary" type="button" id="save">Salvar ficha</button></div>
+        <p class="feedback" id="notice" aria-live="polite"></p>
+      </section>
+      <section class="panel">
+        <div class="panel-heading"><span>02</span><h3>Ficha de produção</h3></div>
+        <div class="empty" id="noPlan">Escolha uma tomada e clique em <strong>Preparar ficha</strong> para construir um prompt com as regras da cena. Nenhum gerador será acionado.</div>
+        <div id="planResult" hidden>
+          <div class="plan-head"><strong id="planTitle"></strong><span class="warn">NÃO AUTORIZADO PARA GERAR</span></div>
+          <div class="meta-row"><b>Destino</b><span id="planProvider"></span></div>
+          <div class="meta-row"><b>Custos</b><span id="planCost"></span></div>
+          <div class="meta-row"><b>Duração alvo</b><span id="planDuration"></span></div>
+          <div class="kicker with-margin">PROMPT / DIREÇÃO DE CENA</div>
+          <textarea id="prompt" readonly spellcheck="false" rows="14"></textarea>
+          <div class="actions"><button class="primary" id="copy" type="button">Copiar prompt</button><button class="secondary" id="openProvider" type="button">Abrir provedor ↗</button></div>
+          <p class="hint">Adicione referências autorizadas no próprio serviço escolhido. Confira limites e preços atuais antes de gastar créditos.</p>
+        </div>
+      </section>
+    </div>
+    <section class="panel section-gap">
+      <div class="panel-heading"><span>03</span><h3>ChatGPT → imagem-base → vídeo</h3></div>
+      <p class="hint">O pedido começa aqui no Creative Director. O ChatGPT abre em outra aba para gerar a imagem pela conta conectada no navegador. Depois importe e aprove o quadro para uso posterior em Veo, Kling ou Runway.</p>
+      <div class="actions"><button id="askChatGPT" class="primary" type="button">Preparar imagem no ChatGPT ↗</button><a class="outline-link" href="https://chatgpt.com/" target="_blank" rel="noopener">Abrir ChatGPT</a></div>
+      <label for="frameUpload">Importar imagem aprovada (PNG, JPEG ou WEBP; até 8 MB)</label>
+      <input id="frameUpload" type="file" accept="image/png,image/jpeg,image/webp">
+      <div class="actions"><button id="importFrame" type="button" class="secondary">Adicionar ao quadro da tomada</button></div>
+      <p id="frameNotice" class="feedback" aria-live="polite"></p>
+      <div id="frames" class="frames"></div>
+    </section>
+    <section class="panel section-gap">
+      <div class="panel-heading"><span>04</span><h3>Catálogo de capacidades</h3></div><p class="hint">Uma seleção de destinos para imagem, vídeo e edição. Catálogo não implica conta conectada ou preço vigente.</p>
+      <div class="models" id="models"></div>
+    </section>
+    <section class="panel section-gap">
+      <div class="panel-heading"><span>05</span><h3>Histórico local</h3></div>
+      <p class="hint">Rascunhos e quadros aprovados ficam no navegador, não são enviados ao GitHub. Você pode exportar as fichas para arquivo.</p>
+      <div class="actions"><button type="button" class="secondary" id="export">Exportar fichas JSON</button></div>
+      <div class="history" id="history"></div>
+    </section>
+    <footer>VSA Creative Director · Site estático · Sem backend, credenciais ou geração automática. A propriedade e a licença de cada ferramenta devem ser respeitadas.</footer>
+  </div>
+</main>
+</body>
+</html>
